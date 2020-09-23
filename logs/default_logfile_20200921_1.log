@@ -1,0 +1,12 @@
+[21 09 2020 21:44:58.751] [BtJCompiler_source.execute() : 1]  8
+[21 09 2020 21:44:58.767] [bt.runtime.InstanceKiller.kill() : 58]  Killing 1 instance.
+[21 09 2020 21:44:58.771] [bt.log.Logger.kill() : 474] [GLOBAL_LOGGER] Closing logger.
+[21 09 2020 21:46:24.342] [BtJCompiler_source.execute() : 1]  8
+[21 09 2020 21:46:24.359] [bt.runtime.InstanceKiller.kill() : 58]  Killing 1 instance.
+[21 09 2020 21:46:24.363] [bt.log.Logger.kill() : 474] [GLOBAL_LOGGER] Closing logger.
+[21 09 2020 21:47:13.330] [BtJCompiler_source.execute() : 1]  8
+[21 09 2020 21:47:13.348] [bt.runtime.InstanceKiller.kill() : 58]  Killing 1 instance.
+[21 09 2020 21:47:13.352] [bt.log.Logger.kill() : 474] [GLOBAL_LOGGER] Closing logger.
+[21 09 2020 21:47:20.282] [BtJCompiler_source.execute() : 1]  8
+[21 09 2020 21:47:20.299] [bt.runtime.InstanceKiller.kill() : 58]  Killing 1 instance.
+[21 09 2020 21:47:20.304] [bt.log.Logger.kill() : 474] [GLOBAL_LOGGER] Closing logger.
