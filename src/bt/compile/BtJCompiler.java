@@ -3,6 +3,7 @@ package bt.compile;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,12 +23,13 @@ import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
 import bt.compile.obj.BtJClass;
-import bt.console.ConsoleTable;
+import bt.console.output.ConsoleTable;
 import bt.log.Logger;
 import bt.runtime.InstanceKiller;
 import bt.types.Killable;
-import bt.utils.exc.Exceptions;
-import bt.utils.nulls.Null;
+import bt.utils.Exceptions;
+import bt.utils.FileUtils;
+import bt.utils.Null;
 
 /**
  * @author &#8904
@@ -148,7 +150,7 @@ public class BtJCompiler implements Killable
         return continueToRun;
     }
 
-    private BtJClass generateClassFromCodeLines()
+    private BtJClass generateClassFromCodeLines() throws FileNotFoundException, IOException
     {
         String snippet = "";
 
@@ -157,32 +159,8 @@ public class BtJCompiler implements Killable
             snippet += line;
         }
 
-        String code = "import bt.log.Logger;"
-                      + "import java.util.*;"
-                      + "public class BtJCompiler_source\r\n"
-                      + "{\r\n"
-                      + "    public BtJCompiler_source()\r\n"
-                      + "    {\r\n"
-                      + "         try\r\n"
-                      + "         {\r\n"
-                      + "             execute();\r\n"
-                      + "         }\r\n"
-                      + "         catch (Exception e)\r\n"
-                      + "         {\r\n"
-                      + "              Logger.global().print(e);\r\n"
-                      + "         }\r\n"
-                      + "    }\r\n"
-                      + "\r\n"
-                      + "    private void execute() throws Exception\r\n"
-                      + "    {\r\n"
-                      + "        <source>\r\n"
-                      + "    }\r\n"
-                      + "\r\n"
-                      + "    private void log(Object o)\r\n"
-                      + "    {\r\n"
-                      + "        Logger.global().print(o);\r\n"
-                      + "    }\r\n"
-                      + "}";
+        String code = FileUtils.readFile(FileUtils.getJarDirectory(getClass()).getAbsolutePath() + "/class_template.java");
+
         code = code.replace("<source>", snippet);
 
         return new BtJClass("BtJCompiler_source", code);
