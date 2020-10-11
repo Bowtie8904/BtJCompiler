@@ -27,17 +27,3 @@ hs_err_pid*
 /target/
 *.prefs
 src/test/Test.java
-target/BtJCompiler-0.0.1-SNAPSHOT-shaded.jar
-target/BtJCompiler-0.0.1-SNAPSHOT-shaded.jar
-target/BtJCompiler-0.0.1-SNAPSHOT.jar
-target/classes/bt/compile/BtJCompiler.class
-target/classes/bt/compile/obj/BtJClass.class
-target/classes/bt/Main.class
-target/original-BtJCompiler-0.0.1-SNAPSHOT.jar
-target/BtJCompiler-0.0.1-SNAPSHOT-shaded.jar
-target/BtJCompiler-0.0.1-SNAPSHOT-shaded.jar
-target/BtJCompiler-0.0.1-SNAPSHOT.jar
-target/classes/bt/compile/BtJCompiler.class
-target/classes/bt/compile/obj/BtJClass.class
-target/classes/bt/Main.class
-target/original-BtJCompiler-0.0.1-SNAPSHOT.jar
