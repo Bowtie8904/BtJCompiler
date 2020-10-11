@@ -121,11 +121,11 @@ public class BtJCompiler implements Killable
         }
         else if (input.equalsIgnoreCase("show"))
         {
-            var table = new ConsoleTable(100);
+            var table = new ConsoleTable(5, 100);
 
-            for (String line : this.codeLines)
+            for (int i = 0; i < this.codeLines.size(); i ++ )
             {
-                table.addRow(line);
+                table.addRow(i, this.codeLines.get(i));
             }
 
             Logger.global().print("\r\n" + table);
@@ -134,6 +134,20 @@ public class BtJCompiler implements Killable
         {
             this.codeLines.clear();
         }
+        else if (input.toLowerCase().startsWith("clear "))
+        {
+            String[] parts = input.split(" ");
+
+            try
+            {
+                int line = Integer.parseInt(parts[1]);
+                this.codeLines.remove(line);
+            }
+            catch (NumberFormatException e)
+            {
+                Logger.global().print("Invalid line number.");
+            }
+        }
         else if (input.equalsIgnoreCase("help"))
         {
             Logger.global().print("Available commands:");
@@ -141,6 +155,7 @@ public class BtJCompiler implements Killable
             Logger.global().print(" exit = exit the BtJCompiler");
             Logger.global().print(" show = show all currently stored lines of code");
             Logger.global().print(" clear = clear all currently stored lines of code");
+            Logger.global().print(" clear <n> = clear code in line n");
         }
         else
         {
