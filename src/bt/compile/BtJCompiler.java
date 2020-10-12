@@ -24,7 +24,6 @@ import javax.tools.ToolProvider;
 
 import bt.compile.obj.BtJClass;
 import bt.console.output.ConsoleTable;
-import bt.log.Logger;
 import bt.runtime.InstanceKiller;
 import bt.types.Killable;
 import bt.utils.Exceptions;
@@ -43,12 +42,8 @@ public class BtJCompiler implements Killable
     private void init()
     {
         InstanceKiller.killOnShutdown(this);
-        Logger.global().setPrintCaller(false);
-        Logger.global().setLogToFile(false);
-        Logger.global().hookSystemOut();
-        Logger.global().hookSystemErr();
 
-        Logger.global().print("\r\n===========================================================\r\n"
+        System.out.println("\r\n===========================================================\r\n"
                               + "______ _     ___ _____                       _ _           \r\n"
                               + "| ___ \\ |   |_  /  __ \\                     (_) |          \r\n"
                               + "| |_/ / |_    | | /  \\/ ___  _ __ ___  _ __  _| | ___ _ __ \r\n"
@@ -82,7 +77,7 @@ public class BtJCompiler implements Killable
         catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                | SecurityException e)
         {
-            Logger.global().print(e);
+            e.printStackTrace();
         }
     }
 
@@ -112,7 +107,7 @@ public class BtJCompiler implements Killable
             catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                    | SecurityException e)
             {
-                Logger.global().print(e);
+                e.printStackTrace();
             }
         }
         else if (input.equalsIgnoreCase("exit"))
@@ -128,7 +123,7 @@ public class BtJCompiler implements Killable
                 table.addRow(i, this.codeLines.get(i));
             }
 
-            Logger.global().print("\r\n" + table);
+            System.out.println("\r\n" + table);
         }
         else if (input.equalsIgnoreCase("clear"))
         {
@@ -145,17 +140,17 @@ public class BtJCompiler implements Killable
             }
             catch (NumberFormatException e)
             {
-                Logger.global().print("Invalid line number.");
+                System.err.println("Invalid line number.");
             }
         }
         else if (input.equalsIgnoreCase("help"))
         {
-            Logger.global().print("Available commands:");
-            Logger.global().print(" run = execute the stored code as a whole");
-            Logger.global().print(" exit = exit the BtJCompiler");
-            Logger.global().print(" show = show all currently stored lines of code");
-            Logger.global().print(" clear = clear all currently stored lines of code");
-            Logger.global().print(" clear <n> = clear code in line n");
+            System.out.println("Available commands:");
+            System.out.println(" run = execute the stored code as a whole");
+            System.out.println(" exit = exit the BtJCompiler");
+            System.out.println(" show = show all currently stored lines of code");
+            System.out.println(" clear = clear all currently stored lines of code");
+            System.out.println(" clear <n> = clear code in line n");
         }
         else
         {
@@ -183,7 +178,7 @@ public class BtJCompiler implements Killable
 
     private BtJClass getClassFromFile(String filePath) throws IOException
     {
-        Logger.global().print("Reading file " + filePath);
+        System.out.println("Reading file " + filePath);
         File file = new File(filePath);
 
         String className = file.getName();
@@ -200,19 +195,19 @@ public class BtJCompiler implements Killable
 
     private Path compile(BtJClass clazz) throws UnsupportedEncodingException, IOException
     {
-        Logger.global().print("Compiling " + clazz.getClassName());
+        System.out.println("Compiling " + clazz.getClassName());
 
         String tmpProperty = System.getProperty("java.io.tmpdir");
         Path sourcePath = Paths.get(tmpProperty, clazz.getClassName() + ".java");
         Files.write(sourcePath, clazz.getCode().getBytes("UTF-8"));
 
-        Logger.global().print("Saved source to " + sourcePath.toString());
+        System.out.println("Saved source to " + sourcePath.toString());
 
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         compiler.run(null, null, null, sourcePath.toFile().getAbsolutePath());
         Path classPath = sourcePath.getParent().resolve(clazz.getClassName() + ".class");
 
-        Logger.global().print("Compiled class file " + classPath.toString());
+        System.out.println("Compiled class file " + classPath.toString());
 
         return classPath;
     }
@@ -220,8 +215,8 @@ public class BtJCompiler implements Killable
     private void run(Path classPath, BtJClass clazz) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
                                                      NoSuchMethodException, SecurityException, IOException
     {
-        Logger.global().print("Running " + clazz.getClassName());
-        Logger.global().print("===========================================================");
+        System.out.println("Running " + clazz.getClassName());
+        System.out.println("===========================================================");
 
         URL classUrl = classPath.getParent().toFile().toURI().toURL();
 
@@ -235,8 +230,8 @@ public class BtJCompiler implements Killable
 
         classLoader.close();
 
-        Logger.global().print("===========================================================");
-        Logger.global().print("Done");
+        System.out.println("===========================================================");
+        System.out.println("Done");
     }
 
     /**
@@ -245,7 +240,7 @@ public class BtJCompiler implements Killable
     @Override
     public void kill()
     {
-        Logger.global().print("Exiting BtJCompiler");
+        System.out.println("Exiting BtJCompiler");
 
         Exceptions.logThrow(() -> Null.checkClose(this.input));
     }
